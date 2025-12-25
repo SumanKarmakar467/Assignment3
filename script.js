@@ -22,8 +22,6 @@ const boxes = document.querySelectorAll(".box");
 
 boxes.forEach((box) => {
     box.addEventListener("click", () => {
-
-        // Get color from box text
         const color = box.textContent.toLowerCase();
 
         // Toggle background color
