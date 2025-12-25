@@ -1,6 +1,4 @@
-// ==============================
-// GREET USER WITH NAME
-// ==============================
+
 
 const greetBtn = document.querySelector("button");
 const nameInput = document.getElementById("name");
