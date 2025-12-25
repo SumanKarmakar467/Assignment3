@@ -18,8 +18,7 @@ const boxes = document.querySelectorAll(".box");
 boxes.forEach((box) => {
     box.addEventListener("click", () => {
         const color = box.textContent.toLowerCase();
-
-        // Toggle background color
+        
         if (box.style.backgroundColor === color) {
             box.style.backgroundColor = "transparent";
         } else {
