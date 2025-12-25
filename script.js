@@ -16,9 +16,7 @@ greetBtn.addEventListener("click", () => {
 });
 
 
-// ==============================
-// MULTI-COLOR BOX TOGGLE LOGIC
-// ==============================
+
 
 const boxes = document.querySelectorAll(".box");
 
