@@ -8,7 +8,7 @@ body{
     width:100vw;
 }
 .container{
-    background-color:darkslategray;
+    background-color:azure;
     max-width:1280px;
     display: flex;
     gap:2rem;
