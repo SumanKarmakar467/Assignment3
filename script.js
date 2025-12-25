@@ -1,5 +1,3 @@
-
-
 const greetBtn = document.querySelector("button");
 const nameInput = document.getElementById("name");
 const helloText = document.querySelector(".hello");
@@ -14,9 +12,6 @@ greetBtn.addEventListener("click", () => {
 
     helloText.textContent = `Hello, ${userName}`;
 });
-
-
-
 
 const boxes = document.querySelectorAll(".box");
 
