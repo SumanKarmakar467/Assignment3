@@ -47,20 +47,21 @@ body{
     font-size: 1.7rem;
     background-color: white;
 }
-.box:hover{
-    border:2px solid orangered;
-}
 #box1:hover{
     color: red;
+    border:3px solid red;
 }
 #box2:hover{
     color:blue;
+    border:3px solid blue;
 }
 #box3:hover{
     color: green;
+    border:3px solid green;
 }
 #box4:hover{
     color: yellow;
+    border:3px solid yellow;
 }
 .greet-name{
     display: flex;
