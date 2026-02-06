@@ -146,8 +146,11 @@ span{
     width:1180px;
     margin:0 auto;
     display: flex;
+    gap:30px;
 }
 .left-box{
+    text-align: left;
+    width: 120%;
     margin-top:40px;
     border-radius: 20px;
     background-color:#F0F8FF;
@@ -182,10 +185,28 @@ span{
     color: blue;
 }
 
-.right{
-    display: flex;
-    justify-content: center;
+.right-box{
+    width:80%;
+    margin-top:40px;
+    border-radius: 20px;
+    background-color:#F0F8FF;
+    padding:20px;
+}
+.right-box-heading{
+    margin-bottom: 20px;
     align-items: center;
+}
+.table{
+    color: blue;
+}
+.first-row{
+
+}
+.second-row{
+
+}
+.third-row{
+
 }
 .image-container{
     padding:40px;
