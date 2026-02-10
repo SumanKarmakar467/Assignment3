@@ -81,4 +81,135 @@
         <p>Click on Add items to add services to your cart</p>
 
         <div class="service-row">
-            <div cl
+            <div class="service-info" data-name="Dry Cleaning" data-price="200">
+                👚 Dry Cleaning - <span>$200.00</span>
+            </div>
+            <button class="service-btn">Add items</button>
+        </div>
+
+        <div class="service-row">
+            <div class="service-info" data-name="Wash & Fold" data-price="100">
+                🫧 Wash & Fold - <span>$100.00</span>
+            </div>
+            <button class="service-btn">Add items</button>
+        </div>
+
+        <div class="service-row">
+            <div class="service-info" data-name="Ironing" data-price="30">
+                🔥 Ironing - <span>$30.00</span>
+            </div>
+            <button class="service-btn">Add items</button>
+        </div>
+
+        <div class="service-row">
+            <div class="service-info" data-name="Stain Removal" data-price="500">
+                🧼 Stain Removal - <span>$500.00</span>
+            </div>
+            <button class="service-btn">Add items</button>
+        </div>
+
+        <div class="service-row">
+            <div class="service-info" data-name="Leather & Suede Cleaning" data-price="999">
+                🧥 Leather & Suede Cleaning - <span>$999.00</span>
+            </div>
+            <button class="service-btn">Add items</button>
+        </div>
+
+        <div class="service-row">
+            <div class="service-info" data-name="Wedding & Dress Cleaning" data-price="2800">
+                👗 Wedding & Dress Cleaning - <span>$2800.00</span>
+            </div>
+            <button class="service-btn">Add items</button>
+        </div>
+
+        <p class="service-info-text">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            Add the items to the cart and book now
+        </p>
+    </div>
+
+    <!-- CART -->
+    <div class="cart-box">
+        <h2>Added Items</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Service Name</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody id="cart-body">
+                <tr class="cart-empty">
+                    <td colspan="3">
+                        <ion-icon name="information-circle-outline"></ion-icon>
+                        <p>No Items Added</p>
+                        <span>Add items to the cart from the services bar</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="cart-total">
+            <span>Total Amount</span>
+            <span id="cart-total-price">₹0</span>
+        </div>
+
+        <div class="booking-box">
+            <h3>Book Now</h3>
+
+            <input type="text" placeholder="John Doe" name="fullname">
+
+            <div class="booking-row">
+                <input type="email" placeholder="mail@gmail.com" name="email">
+                <input type="text" placeholder="0000000000" name="phone">
+            </div>
+
+            <button class="booking-btn" disabled>Book now</button>
+
+            <p class="booking-warning">
+                <ion-icon name="information-circle-outline"></ion-icon>
+                Add the items to the cart to book
+            </p>
+        </div>
+    </div>
+
+</section>
+
+<!-- EXTRA HELP -->
+<section class="Extra-help">
+    <div class="help">
+        <div class="laundry-content">
+
+            <div class="box">
+                <img src="icons/premium-services.png" class="icons" alt="">
+                <h2 class="box-heading">Premium Services</h2>
+                <p class="box-des">Meticulous dry cleaning ensuring garments feel new.</p>
+            </div>
+
+            <div class="box">
+                <img src="icons/quick-support.png" class="icons" alt="">
+                <h2 class="box-heading">Quick Support</h2>
+                <p class="box-des">Prompt solutions for a smooth experience.</p>
+            </div>
+
+            <div class="box">
+                <img src="icons/delivery.png" class="icons" alt="">
+                <h2 class="box-heading">Hassle Free Delivery</h2>
+                <p class="box-des">Convenient pickup and delivery options.</p>
+            </div>
+
+            <div class="box">
+                <img src="icons/affordable-prices.png" class="icons" alt="">
+                <h2 class="box-heading">Affordable Prices</h2>
+                <p class="box-des">Exceptional care at affordable prices.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
