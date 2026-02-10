@@ -1,75 +1,61 @@
-document.addEventListener("DOMContentLoaded", function () {
+let cartBody = document.getElementById("cart-body");
+let totalPriceEl = document.getElementById("total-price");
+let emptyRow = document.getElementById("empty-row");
 
-    console.log("script.js loaded ✅");
+let count = 0;
+let totalPrice = 0;
 
-    let cart = [];
-    let total = 0;
+// Select all Add buttons
+document.querySelectorAll(".Add-items").forEach(button => {
+    button.addEventListener("click", () => {
+        const itemDiv = button.parentElement;
+        const text = itemDiv.querySelector("div").innerText;
+        const priceText = itemDiv.querySelector(".price").innerText;
 
-    const serviceButtons = document.querySelectorAll(".service-btn");
-    const cartBody = document.getElementById("cart-body");
-    const totalPriceEl = document.getElementById("cart-total-price");
-    const bookBtn = document.querySelector(".booking-btn");
-    const warningText = document.querySelector(".booking-warning");
+        const serviceName = text.split("-")[0].trim();
+        const price = parseFloat(priceText.replace("$", "").replace("₹", ""));
 
-    serviceButtons.forEach(button => {
-        button.addEventListener("click", function () {
-
-            const serviceInfo = this.previousElementSibling;
-            const name = serviceInfo.dataset.name;
-            const price = Number(serviceInfo.dataset.price);
-
-            const index = cart.findIndex(item => item.name === name);
-
-            if (index !== -1) {
-                // REMOVE
-                cart.splice(index, 1);
-                total -= price;
-                this.textContent = "Add items";
-                this.classList.remove("remove");
-            } else {
-                // ADD
-                cart.push({ name, price });
-                total += price;
-                this.textContent = "Remove";
-                this.classList.add("remove");
-            }
-
-            renderCart();
-        });
+        addItem(serviceName, price);
     });
+});
 
-    function renderCart() {
-        cartBody.innerHTML = "";
+function addItem(name, price) {
+    count++;
+    totalPrice += price;
 
-        if (cart.length === 0) {
-            cartBody.innerHTML = `
-                <tr class="cart-empty">
-                    <td colspan="3">
-                        <ion-icon name="information-circle-outline"></ion-icon>
-                        <p>No Items Added</p>
-                        <span>Add items to the cart from the services bar</span>
-                    </td>
-                </tr>
-            `;
-            totalPriceEl.textContent = "₹0";
-            bookBtn.disabled = true;
-            warningText.style.display = "flex";
-            return;
-        }
-
-        cart.forEach((item, index) => {
-            cartBody.innerHTML += `
-                <tr>
-                    <td>${index + 1}</td>
-                    <td>${item.name}</td>
-                    <td>₹${item.price}</td>
-                </tr>
-            `;
-        });
-
-        totalPriceEl.textContent = `₹${total}`;
-        bookBtn.disabled = false;
-        warningText.style.display = "none";
+    // Remove empty row once first item is added
+    if (emptyRow) {
+        emptyRow.remove();
+        emptyRow = null;
     }
 
+    const row = document.createElement("tr");
+    row.innerHTML = `
+        <td>${count}</td>
+        <td>${name}</td>
+        <td>₹${price.toFixed(2)}</td>
+    `;
+
+    cartBody.appendChild(row);
+    totalPriceEl.innerText = totalPrice.toFixed(2);
+}
+
+// Booking form submit
+document.getElementById("booking-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    if (count === 0) {
+        alert("Please add at least one service before booking.");
+        return;
+    }
+
+    const name = document.getElementById("customer-name").value;
+    const email = document.getElementById("customer-email").value;
+    const phone = document.getElementById("customer-phone").value;
+
+    alert(
+        `Booking Successful!\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nTotal: ₹${totalPrice.toFixed(2)}`
+    );
+
+    this.reset();
 });
