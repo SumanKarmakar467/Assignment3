@@ -44,7 +44,7 @@ body{
 }
 span{
     font-size: 1.7rem;
-    font-weight:bold;
+    font-weight: bold;
     color:rgba(0, 0, 0, 0.596) ;
 }
 .nav{
@@ -89,22 +89,22 @@ span{
     padding:0.6rem;
     align-items: center;
     margin: 0 auto;
-    margin-top:40px;
+    margin-top:120px;
 }
 .left{
     text-align: start;
     padding:50px;
 }
-.heading1{
+.heading1,.heading2{
     color:rgba(0, 0, 0, 0.596);
     font-size:2.8rem;
     margin-bottom: 16px;
 }
-.heading2{
+/* .heading2{
     color:rgba(0, 0, 0, 0.596);
     font-size:2.8rem;
     margin-bottom: 16px;
-}
+} */
 .heading3{
     color:blue;
     font-size:2.8rem;
@@ -126,7 +126,6 @@ span{
     align-items: center;
     background-color: rgba(110, 212, 212, 0.486);
     color: blue;
-    /* border:2px solid blue; */
     padding: 8px 16px;
     border-radius: 10px;
     text-decoration: none;
@@ -168,160 +167,120 @@ span{
     font-weight: bold;
     font-size: 1.5rem;
 }
-.page {
-    padding: 40px 0;
-}
+/* ================================
+   OUR SERVICES – LEFT BOX
+================================ */
 
-.page.container {
-    width: 1100px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 30px;
-}
-
-.card {
-    background: #fff;
-    border-radius: 12px;
-    padding: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-}
-
-/* SERVICES LAYOUT */
 .our-services {
-    width: 1180px;
-    margin: 0 auto;
-    display: flex;
+    max-width: 1180px;
+    margin: 60px auto;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
     gap: 30px;
+    align-items: stretch;
+    margin-top: 200px;
 }
 
-/* LEFT */
-.services-box {
-    width: 120%;
-    background-color: #F0F8FF;
-    padding: 20px;
+/* Left Card */
+.left-box {
+    background-color: #ffffff;
     border-radius: 20px;
-    text-align: left;
-}
-
-.services-list {
-    padding: 20px 0;
-    border-bottom: 1px solid black;
-}
-
-.service-row {
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     display: flex;
-    justify-content: space-between;
-    line-height: 40px;
+    flex-direction: column;
 }
 
-.service-price {
+/* Heading */
+.service-heading {
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.service-heading h2 {
+    font-size: 22px;
     color: blue;
-    font-size: 15px;
+    margin-bottom: 6px;
 }
 
-.service-btn {
-    height: 30px;
-    width: 110px;
-    border-radius: 7px;
-    border: none;
-    cursor: pointer;
-}
-
-.service-btn.remove {
-    background: #ffe5e5;
-    color: #e53935;
-}
-
-.service-info-text {
-    margin-top: 20px;
-    color: blue;
-}
-
-/* RIGHT */
-.cart-box {
-    background: #ffffff;
-    width: 360px;
-    padding: 20px;
-    border-radius: 14px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.05);
-}
-
-.cart-heading h2 {
-    font-size: 18px;
-    margin-bottom: 16px;
-}
-
-.cart-table table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.cart-table th {
-    font-size: 12px;
-    color: #9aa0a6;
-    text-align: left;
-}
-
-.cart-table td {
+.service-heading p {
     font-size: 14px;
-    padding: 8px 0;
+    color: rgba(0, 0, 0, 0.55);
 }
 
-.cart-empty {
-    text-align: center;
-    padding: 30px 0;
+/* ================================
+   SERVICE ITEMS LIST
+================================ */
+
+.service-items {
+    flex-grow: 1;
+    padding: 0;
+    border-bottom: none;
 }
 
-.cart-total {
+/* Individual item */
+#items {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 14px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#items:last-child {
+    border-bottom: none;
+}
+
+#items div {
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.75);
+}
+
+.price {
+    color: blue;
     font-weight: 600;
 }
 
-.booking-box {
-    border-top: 1px solid #f0f0f0;
-    padding-top: 16px;
-}
-
-.booking-box input {
-    width: 100%;
-    height: 36px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    border: 1px solid #e6e6e6;
-    padding: 0 12px;
-}
-
-.booking-row {
-    display: flex;
-    gap: 12px;
-}
-
-.booking-btn {
-    width: 100%;
-    height: 40px;
-    background: #dcdfff;
-    border-radius: 10px;
+/* Add item button */
+.Add-items {
+    background-color: rgba(110, 212, 212, 0.3);
+    color: blue;
+    padding: 6px 14px;
+    border-radius: 20px;
     border: none;
-    cursor: not-allowed;
-}
-
-.booking-warning {
-    font-size: 12px;
-    color: #e53935;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
     display: flex;
-    gap: 6px;
-    margin-top: 6px;
+    align-items: center;
+    gap: 4px;
 }
 
+.Add-items:hover {
+    background-color: rgb(9, 162, 250);
+    color: #ffffff;
+}
 
+/* ================================
+   INFO TEXT
+================================ */
 
+.add-items {
+    margin-top: 18px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: rgb(9, 162, 250);
+}
 
 .help{
     max-width:1280px;
     margin:0 auto;
+    margin-top: 100px;
 }
 .laundry-content{
     display: flex;
@@ -351,6 +310,7 @@ span{
     justify-content: space-evenly;
     background-color: rgba(110, 212, 212, 0.486);
     padding:50px;
+    margin-top: 100px;
     /* align-items: center; */
 }
 .subscribe-heading h2{
@@ -422,4 +382,127 @@ span{
 }
 .about{
     font-weight: bold;
+}
+
+/* ================================
+   ADDED ITEMS (RIGHT BOX)
+================================ */
+
+.added-items-table {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+.added-items-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.added-items-table thead {
+    background-color: rgba(110, 212, 212, 0.486);
+}
+
+.added-items-table th {
+    padding: 12px;
+    font-size: 14px;
+    text-align: left;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.added-items-table td {
+    padding: 12px;
+    font-size: 14px;
+    border-bottom: 1px solid #eee;
+}
+
+.added-items-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Empty cart state */
+.empty-state {
+    padding: 30px 10px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.55);
+}
+
+.empty-state ion-icon {
+    font-size: 28px;
+    color: rgb(9, 162, 250);
+    margin-bottom: 10px;
+}
+
+/* ================================
+   TOTAL AMOUNT
+================================ */
+
+.total-amount {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 10px;
+    margin-bottom: 20px;
+    border-top: 2px dashed rgba(0, 0, 0, 0.15);
+}
+
+.total-amount h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+#total-price {
+    color: blue;
+    font-weight: bold;
+}
+
+/* ================================
+   BOOK NOW FORM
+================================ */
+
+.book-now {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+.book-now h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: blue;
+}
+
+#booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#booking-form input {
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+#booking-form input:focus {
+    outline: none;
+    border-color: rgb(9, 162, 250);
+    box-shadow: 0 0 0 3px rgba(9, 162, 250, 0.15);
+}
+
+/* Book button */
+#booking-form .book-service {
+    margin-top: 10px;
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
 }
