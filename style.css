@@ -187,6 +187,7 @@ span{
 
 .right-box{
     width:80%;
+    height:auto;
     margin-top:40px;
     border-radius: 20px;
     background-color:#F0F8FF;
@@ -197,17 +198,8 @@ span{
     margin-bottom: 20px;
     align-items: center;
 }
-.table{
+table{
     color: blue;
-}
-.first-row{
-
-}
-.second-row{
-
-}
-.third-row{
-
 }
 .image-container{
     padding:40px;
