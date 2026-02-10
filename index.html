@@ -4,229 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assignment 3</title>
+
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=laundry" />
+
+    <!-- Ionicons (modern) -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
+
 <body>
-    <div class="header">
-        <div class="header-content">
-            <span>Logo</span>
-            <nav class="nav">
-                <a href="" class="nav-link">Home</a>
-                <a href="" class="nav-link">Services</a>
-                <a href="" class="nav-link">About Us</a>
-                <a href="" class="nav-link">Contact Us</a>
-            </nav>
-            <a href="#" class="username">Username</a>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="header-content">
+        <span class="logo">Logo</span>
+
+        <nav class="nav">
+            <a href="#" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Services</a>
+            <a href="#" class="nav-link">About Us</a>
+            <a href="#" class="nav-link">Contact Us</a>
+        </nav>
+
+        <a href="#" class="username">Username</a>
+    </div>
+</header>
+
+<!-- HERO -->
+<section class="main-section">
+    <div class="left">
+        <h1 class="heading1">Revitalize Your</h1>
+        <h1 class="heading2">Clothes With Expert</h1>
+        <h1 class="heading3">Laundry Services!</h1>
+
+        <p class="description">
+            From premium dry cleaning to swift wash & fold, we deliver care and convenience.
+        </p>
+
+        <div class="book-button">
+            <button class="book-service">Book a service today!</button>
         </div>
     </div>
 
-    <div class="content">
-        <div class="main-section">
-            <div class="left">
-                <h1 class="heading1">Revitalize Your </h1>
-                <h1 class="heading2">Clothes With Expert</h1>
-                <h1 class="heading3">Laundry Services!</h1>
-                <p class="description">From premium dry cleaning to swift and fold,we deliver care and convenience. Schedule a pickup and rediscover the freshness of your clothes today!</p>
-                <div class="book-button">
-                    <button class="book-service">Book a service today!</button>
-                </div>
-            </div>
-            <div class="right">
-                <div class="image-container">
-                    <img class="image" src="hero-image.jpg" alt="washing machine image">
-                </div>
-            </div>
-        </div>
-        <div class="main-footer">
-                <div class="achivements">
-                    <h2>Our Achivements</h2>
-                </div>
-                <div class="services">
-                    <div class="numbers">15+</div>
-                    <div class="achivements-content">Laundry Services</div>
-                </div>
-                <div class="customers">
-                    <div class="numbers">240+</div>
-                    <div class="achivements-content">Happy Customers</div>
-                </div>
-                <div class="experience">
-                    <div class="numbers">2+ Years</div>
-                    <div class="achivements-content">Experience</div>
-                </div>
+    <div class="right">
+        <div class="image-container">
+            <img class="image" src="hero-image.jpg" alt="Laundry">
         </div>
     </div>
-    
-    <div class="our-services">
+</section>
 
-    <!-- LEFT BOX -->
-    <div class="left-box">
+<!-- ACHIEVEMENTS -->
+<section class="main-footer">
+    <div>
+        <h2 class="achivements">Our Achievements</h2>
+    </div>
+    <div>
+        <div class="numbers">15+</div>
+        <div>Laundry Services</div>
+    </div>
+    <div>
+        <div class="numbers">240+</div>
+        <div>Happy Customers</div>
+    </div>
+    <div>
+        <div class="numbers">2+ Years</div>
+        <div>Experience</div>
+    </div>
+</section>
+
+<!-- SERVICES + CART -->
+<section class="our-services">
+
+    <!-- SERVICES -->
+    <div class="services-box">
         <h2>Our Services</h2>
-        <p class="subtitle">Click on Add items to add services to your cart</p>
+        <p>Click on Add items to add services to your cart</p>
 
-        <div class="service-item">
-            <span data-name="Dry Cleaning" data-price="200">👚 Dry Cleaning - $200</span>
-            <button class="add-btn">Add items</button>
-        </div>
-
-        <div class="service-item">
-            <span data-name="Wash & Fold" data-price="100">🫧 Wash & Fold - $100</span>
-            <button class="add-btn">Add items</button>
-        </div>
-
-        <div class="service-item">
-            <span data-name="Ironing" data-price="30">🔥 Ironing - $30</span>
-            <button class="add-btn">Add items</button>
-        </div>
-
-        <div class="service-item">
-            <span data-name="Stain Removal" data-price="500">🧼 Stain Removal - $500</span>
-            <button class="add-btn">Add items</button>
-        </div>
-
-        <div class="service-item">
-            <span data-name="Leather Cleaning" data-price="999">🧥 Leather Cleaning - $999</span>
-            <button class="add-btn">Add items</button>
-        </div>
-
-        <div class="info">
-            <ion-icon name="information-circle-outline"></ion-icon>
-            Add the items to the cart and book now
-        </div>
-    </div>
-
-    <!-- RIGHT BOX -->
-    <div class="right-box">
-
-        <h2>Added Items</h2>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>S.No</th>
-                    <th>Service</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody id="cart-body">
-                <tr class="empty">
-                    <td colspan="3">
-                        <ion-icon name="information-circle-outline"></ion-icon>
-                        <p>No Items Added</p>
-                        <span>Add items to the cart from services</span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div class="total">
-            <span>Total Amount</span>
-            <span id="total-price">₹0</span>
-        </div>
-
-        <div class="book-now">
-            <h3>Book Now</h3>
-
-            <input type="text" placeholder="Full Name">
-            <div class="row">
-                <input type="email" placeholder="Email ID">
-                <input type="text" placeholder="Phone Number">
-            </div>
-
-            <button id="book-btn" disabled>Book now</button>
-
-            <p class="warning">
-                <ion-icon name="information-circle-outline"></ion-icon>
-                Add items to the cart to book
-            </p>
-        </div>
-
-    </div>
-</div>
-
-    <section class="Extra-help">
-        <div class="help">
-            <div class="laundry-content">
-                <div class="box">       
-                    <img src="icons/premimum services.png" class="icons" alt="">    
-                    <h2 class="box-heading">Premium Services</h2>
-                    <p class="box-des">Elevate your wardrobe with our maticuious dry cleaning. Ensuring garments look and feel as good as new.</p>
-                </div>
-                <div class="box">
-                    <img src="icons\quick support.png" class="icons" alt="">
-                    <h2 class="box-heading">Quick Support</h2>
-                    <p class="box-des">We're commited to providing prompt solutions to ensure your experience is smooth and worry-free.</p>
-                </div>
-                <div class="box">
-                    <img src="icons/delivery.png" class="icons" alt="">
-                    <h2 class="box-heading">Hassle Free Delivery</h2>
-                    <p class="box-des">Enjoy seamless service with our convert pickup and delivery options, tailored to your schedule.</p>
-                </div>
-                <div class="box">
-                    <img src="icons/affordable prices.png" class="icons" alt="">
-                    <h2 class="box-heading"> Affordable Prices</h2>
-                    <p class="box-des">Experience exceptional care without breaking the bank - our affordable prices make laundry day stress-free.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="subscribe">
-        <div class="subscribe-section">
-            <div class="subscribe-heading">
-                <h2 class="one">Subscribe to our</h2>
-                <h2 class="two">newsletter.</h2>
-            </div>
-            <div class="name">
-                <div class="full-name">
-                    <input type="text" id="full-name" placeholder="Full name" required>
-                </div>
-                <div class="email">
-                    <input type="email" id="email-input" placeholder="Email" required>
-                </div>
-                <div class="subscribe-button">
-                    <button>Subscribe</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <div class="footer-section">
-                <div class="footer-div1">
-                    <h2 class="footer-logo">Logo</h2>
-                    <p class="about">About Us</p>
-                    <p class="footer-des1">Lorem lpsum Dolor Sit Amet</p>
-                    <p class="footer-des2">Consectetur. Sed At Congue.</p>
-                </div>
-                <div class="footer-div2">
-                    <h2 class="important">Important Links</h2>
-                    <p class="important-des1">About us</p>
-                    <p class="important-des1">Contact us</p>
-                    <p class="important-des1">Privacy Policy</p>
-                    <p class="important-des1">Terms of use</p>
-                    <p class="important-des1">Refund Policy</p>
-                </div>
-                <div class="contact-section">
-                    <div class="mail">
-                        <p class="mail-des1">mail@site.com</p>
-                        <p class="phone">+91 91234 56780</p>
-                    </div>
-                </div>
-                <div class="follow">
-                    <div class="follow-des1">Follow Us</div>
-                    <div class="follow-des2">
-                        <ion-icon name="logo-instagram"></ion-icon>
-                        <ion-icon name="logo-facebook"></ion-icon>
-                        <ion-icon name="logo-twitter"></ion-icon>
-                        <ion-icon name="logo-youtube"></ion-icon>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
-</body>
-</html> 
+        <div class="service-row">
+            <div cl
