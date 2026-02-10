@@ -142,12 +142,153 @@ span{
     color: white;
     background-color: rgb(9, 162, 250);
 }
-.cart{
-    margin-top:15px;
-    display: flex;
-    color: blue;
-    margin-bottom:10px;
+
+
+
+
+
+
+.image-container{
+    padding:40px;
+    height:40vh;
 }
+.image{
+    height:110%;
+    width:110%;
+}
+.main-footer{
+    max-width:1280px;
+    margin:0 auto;
+    display: flex;
+    justify-content: space-around;
+    margin-top:50px;
+    background-color:rgba(110, 212, 212, 0.486) ;
+    align-items: center;
+    padding:30px;
+}
+.achivements{
+    font-size:2rem;
+    color: blue;
+}
+.numbers{
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+.page {
+    padding: 40px 0;
+}
+
+.page.container {
+    width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 30px;
+}
+
+.card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* SERVICES */
+.services h2 {
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.service-item {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.service-item button {
+    background: #f0f2ff;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.info {
+    margin-top: 15px;
+    font-size: 13px;
+    color: #5a63f2;
+}
+
+/* CART */
+.cart h3 {
+    margin-bottom: 15px;
+}
+
+.empty-cart {
+    text-align: center;
+    padding: 25px 0;
+    color: #777;
+}
+
+.empty-cart .icon {
+    width: 40px;
+    height: 40px;
+    margin: auto;
+    border-radius: 50%;
+    background: #f0f2ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.total {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+    font-size: 15px;
+}
+
+.cart h4 {
+    margin: 15px 0;
+}
+
+/* FORM */
+form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+form .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.book-btn {
+    width: 100%;
+    padding: 12px;
+    background: #cfd4ff;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+
 .help{
     max-width:1280px;
     margin:0 auto;
