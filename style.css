@@ -184,6 +184,94 @@ span{
     align-items: center;
     color: blue;
 }
+/* Right box card */
+.right-box {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 20px;
+    width: 360px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Heading */
+.right-box-heading h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2b2b2b;
+    margin-bottom: 16px;
+}
+
+/* Table */
+.added-items-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Table header */
+.added-items-table thead th {
+    font-size: 12px;
+    font-weight: 500;
+    color: #9aa0a6;
+    text-align: left;
+    padding-bottom: 10px;
+}
+
+/* Table body */
+.added-items-table tbody td {
+    font-size: 14px;
+    color: #2b2b2b;
+    padding: 8px 0;
+}
+
+/* Empty state row */
+.empty-row td {
+    padding: 30px 0;
+    text-align: center;
+}
+
+/* Showing icon and text */
+.empty-state ion-icon {
+    font-size: 32px;
+    color: #b0b7ff;
+    margin-bottom: 10px;
+}
+
+.empty-state p {
+    font-size: 14px;
+    font-weight: 500;
+    color: #2b2b2b;
+    margin: 6px 0;
+}
+
+.empty-state span {
+    font-size: 12px;
+    color: #9aa0a6;
+}
+
+/* Divider */
+.added-items-table {
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 16px;
+}
+
+/* Total amount section */
+.total-amount {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 14px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2b2b2b;
+}
+
+/* Price */
+.total-amount .price {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000000;
+}
 
 .image-container{
     padding:40px;
