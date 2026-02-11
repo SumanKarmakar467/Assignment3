@@ -251,7 +251,7 @@ span{
     font-weight: 600;
 }
 
-/* Add item button */
+
 .Add-items {
     background-color: rgba(110, 212, 212, 0.3);
     color: blue;
@@ -272,9 +272,7 @@ span{
     color: #ffffff;
 }
 
-/* ================================
-   INFO TEXT
-================================ */
+
 
 .add-items {
     margin-top: 18px;
