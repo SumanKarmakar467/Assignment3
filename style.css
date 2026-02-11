@@ -300,8 +300,6 @@ span{
 }
 .box-heading{
     color: blue;
-    /* display: flex;
-    justify-content: start; */
     margin-bottom:10px;
 }
 .box-des{
