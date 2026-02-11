@@ -108,11 +108,7 @@ span{
     font-size:2.8rem;
     margin-bottom: 16px;
 }
-/* .heading2{
-    color:rgba(0, 0, 0, 0.596);
-    font-size:2.8rem;
-    margin-bottom: 16px;
-} */
+
 .heading3{
     color:blue;
     font-size:2.8rem;
@@ -175,9 +171,7 @@ span{
     font-weight: bold;
     font-size: 1.5rem;
 }
-/* ================================
-   OUR SERVICES – LEFT BOX
-================================ */
+
 
 .our-services {
     max-width: 1180px;
@@ -189,7 +183,7 @@ span{
     margin-top: 150px;
 }
 
-/* Left Card */
+
 .left-box {
     background-color: #ffffff;
     border-radius: 20px;
@@ -199,7 +193,7 @@ span{
     flex-direction: column;
 }
 
-/* Heading */
+
 .service-heading {
     border-bottom: 2px solid rgba(0, 0, 0, 0.1);
     padding-bottom: 15px;
@@ -217,9 +211,7 @@ span{
     color: rgba(0, 0, 0, 0.55);
 }
 
-/* ================================
-   SERVICE ITEMS LIST
-================================ */
+
 
 .service-items {
     flex-grow: 1;
@@ -227,7 +219,7 @@ span{
     border-bottom: none;
 }
 
-/* Individual item */
+
 #items {
     display: flex;
     justify-content: space-between;
