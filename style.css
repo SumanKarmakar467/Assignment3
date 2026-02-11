@@ -42,6 +42,13 @@ body{
     align-items: center;
     padding:20px 40px;
 }
+@media screen and (max-width: 1200px) {
+  .header-content {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
 span{
     font-size: 1.7rem;
     font-weight: bold;
@@ -91,6 +98,7 @@ span{
     margin: 0 auto;
     margin-top:120px;
 }
+
 .left{
     text-align: start;
     padding:50px;
@@ -506,3 +514,169 @@ span{
     border-radius: 12px;
     cursor: pointer;
 }
+
+
+/* =========================================
+   TABLET RESPONSIVE (1024px)
+========================================= */
+@media (max-width: 1024px) {
+
+  .main-section {
+    flex-direction: column;
+    text-align: center;
+    margin-top: 80px;
+  }
+
+  .left {
+    padding: 20px;
+    text-align: center;
+  }
+
+  .image-container {
+    height: auto;
+    padding: 20px;
+  }
+
+  .image {
+    width: 100%;
+    height: auto;
+  }
+
+  .main-footer {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .our-services {
+    grid-template-columns: 1fr;
+    margin-top: 80px;
+  }
+
+  .laundry-content {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .box {
+    width: 45%;
+  }
+
+  .subscribe-section {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+  }
+
+  .footer-section {
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+}
+
+
+/* =========================================
+   MOBILE RESPONSIVE (768px)
+========================================= */
+@media (max-width: 768px) {
+
+  .header-content {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .heading1,
+  .heading2,
+  .heading3 {
+    font-size: 2rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+
+  .box {
+    width: 100%;
+  }
+
+  .service-heading h2 {
+    font-size: 18px;
+  }
+
+  #items {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .Add-items {
+    align-self: flex-start;
+  }
+
+  .subscribe-heading h2 {
+    font-size: 2rem;
+    justify-content: center;
+  }
+
+  #full-name,
+  #email-input {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .subscribe-button button {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .footer-section {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+
+/* =========================================
+   SMALL MOBILE (480px)
+========================================= */
+@media (max-width: 480px) {
+
+  .heading1,
+  .heading2,
+  .heading3 {
+    font-size: 1.6rem;
+  }
+
+  .description {
+    font-size: 0.9rem;
+  }
+
+  .book-service {
+    width: 100%;
+  }
+
+  .left-box,
+  .right-box {
+    padding: 15px;
+  }
+
+  .added-items-table th,
+  .added-items-table td {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .total-amount h3 {
+    font-size: 14px;
+  }
+
+  #booking-form input {
+    font-size: 13px;
+  }
+}
+
