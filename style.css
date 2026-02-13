@@ -264,6 +264,16 @@ span{
     color: #ffffff;
 }
 
+.Add-items.remove-state {
+    background-color: rgba(220, 53, 69, 0.18);
+    color: #b10012;
+}
+
+.Add-items.remove-state:hover {
+    background-color: #dc3545;
+    color: #ffffff;
+}
+
 
 
 .add-items {
