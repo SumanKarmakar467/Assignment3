@@ -274,6 +274,47 @@ span{
     color: #ffffff;
 }
 
+.service-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.service-name {
+    flex: 1;
+}
+
+.qty-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.qty-btn {
+    width: 24px;
+    height: 24px;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(9, 162, 250, 0.15);
+    color: #0369a1;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.qty-btn:hover {
+    background-color: rgb(9, 162, 250);
+    color: #ffffff;
+}
+
+.qty-value {
+    min-width: 18px;
+    text-align: center;
+    font-weight: 600;
+}
+
 
 
 .add-items {

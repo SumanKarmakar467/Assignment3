@@ -35,49 +35,105 @@ function toggleItem(button) {
     const price = parseFloat(button.dataset.servicePrice);
 
     if (addedItems.has(serviceId)) {
-        removeItem(serviceId, price);
-        setButtonState(button, false);
+        removeCompletely(serviceId);
         return;
     }
 
-    addItem(serviceId, serviceName, price);
-    setButtonState(button, true);
+    addNewItem(serviceId, serviceName, price, button);
 }
 
-function addItem(serviceId, name, price) {
+function addNewItem(serviceId, name, unitPrice, button) {
     removeEmptyRow();
 
     const row = document.createElement("tr");
     row.dataset.serviceId = serviceId;
     row.innerHTML = `
         <td></td>
-        <td>${name}</td>
-        <td>?${price.toFixed(2)}</td>
+        <td>
+            <div class="service-line">
+                <span class="service-name">${name}</span>
+                <div class="qty-controls">
+                    <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">-</button>
+                    <span class="qty-value">1</span>
+                    <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+            </div>
+        </td>
+        <td>₹<span class="line-total">${unitPrice.toFixed(2)}</span></td>
     `;
 
     cartBody.appendChild(row);
-    addedItems.set(serviceId, row);
-    totalPrice += price;
+
+    const item = {
+        row,
+        button,
+        unitPrice,
+        quantity: 1
+    };
+
+    addedItems.set(serviceId, item);
+    bindQuantityControls(serviceId, item);
+    setButtonState(button, true, 1);
     refreshCart();
 }
 
-function removeItem(serviceId, price) {
-    const row = addedItems.get(serviceId);
-    if (row) {
-        row.remove();
-        addedItems.delete(serviceId);
+function bindQuantityControls(serviceId, item) {
+    const plusBtn = item.row.querySelector(".qty-plus");
+    const minusBtn = item.row.querySelector(".qty-minus");
+
+    plusBtn.addEventListener("click", () => changeQuantity(serviceId, 1));
+    minusBtn.addEventListener("click", () => changeQuantity(serviceId, -1));
+}
+
+function changeQuantity(serviceId, delta) {
+    const item = addedItems.get(serviceId);
+    if (!item) {
+        return;
     }
 
-    totalPrice = Math.max(0, totalPrice - price);
+    item.quantity += delta;
+
+    if (item.quantity <= 0) {
+        removeCompletely(serviceId);
+        return;
+    }
+
+    updateItemRow(item);
+    refreshCart();
+}
+
+function updateItemRow(item) {
+    item.row.querySelector(".qty-value").innerText = item.quantity;
+    item.row.querySelector(".line-total").innerText = (item.unitPrice * item.quantity).toFixed(2);
+    setButtonState(item.button, true, item.quantity);
+}
+
+function removeCompletely(serviceId) {
+    const item = addedItems.get(serviceId);
+    if (!item) {
+        return;
+    }
+
+    item.row.remove();
+    addedItems.delete(serviceId);
+    setButtonState(item.button, false);
     refreshCart();
 }
 
 function refreshCart() {
     const rows = cartBody.querySelectorAll("tr[data-service-id]");
+    let updatedTotal = 0;
+
     rows.forEach((row, index) => {
         row.children[0].innerText = index + 1;
+
+        const item = addedItems.get(row.dataset.serviceId);
+        if (item) {
+            updatedTotal += item.unitPrice * item.quantity;
+        }
     });
 
+    totalPrice = updatedTotal;
     totalPriceEl.innerText = totalPrice.toFixed(2);
 
     if (rows.length === 0) {
@@ -85,10 +141,10 @@ function refreshCart() {
     }
 }
 
-function setButtonState(button, isAdded) {
+function setButtonState(button, isAdded, quantity = 0) {
     button.classList.toggle("remove-state", isAdded);
     button.innerHTML = isAdded
-        ? 'Remove <ion-icon name="remove-circle-outline"></ion-icon>'
+        ? `Remove (${quantity}) <ion-icon name="remove-circle-outline"></ion-icon>`
         : 'Add <ion-icon name="add-circle-outline"></ion-icon>';
 }
 
