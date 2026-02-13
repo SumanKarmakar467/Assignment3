@@ -174,10 +174,10 @@ span{
 
 
 .our-services {
-    max-width: 1180px;
+    max-width: 1140px;
     margin: 60px auto;
     display: grid;
-    grid-template-columns: 1.1fr 1fr;
+    grid-template-columns: 1.15fr 0.85fr;
     gap: 30px;
     align-items: stretch;
     margin-top: 150px;
@@ -191,6 +191,12 @@ span{
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-direction: column;
+}
+
+.right-box {
+    width: 100%;
+    max-width: 430px;
+    justify-self: end;
 }
 
 
@@ -278,28 +284,29 @@ span{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
+    gap: 8px;
 }
 
 .service-name {
     flex: 1;
+    font-size: 13px;
 }
 
 .qty-controls {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     flex-shrink: 0;
 }
 
 .qty-btn {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     border: none;
     border-radius: 50%;
     background-color: rgba(9, 162, 250, 0.15);
     color: #0369a1;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 700;
     cursor: pointer;
 }
@@ -310,8 +317,9 @@ span{
 }
 
 .qty-value {
-    min-width: 18px;
+    min-width: 14px;
     text-align: center;
+    font-size: 12px;
     font-weight: 600;
 }
 
@@ -456,8 +464,8 @@ span{
 }
 
 .added-items-table td {
-    padding: 12px;
-    font-size: 14px;
+    padding: 9px 10px;
+    font-size: 13px;
     border-bottom: 1px solid #eee;
 }
 
@@ -580,6 +588,11 @@ span{
   .our-services {
     grid-template-columns: 1fr;
     margin-top: 80px;
+  }
+
+  .right-box {
+    max-width: 100%;
+    justify-self: stretch;
   }
 
   .laundry-content {
