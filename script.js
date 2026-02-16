@@ -4,8 +4,9 @@ const bookingForm = document.getElementById("booking-form");
 const servicesSection = document.getElementById("services");
 const heroBookBtn = document.querySelector(".book-button .book-service");
 const bookingEmailEl = document.querySelector(".mail-des1");
-const BOOKING_RECEIVER_EMAIL = bookingEmailEl?.innerText?.trim() || "mail@site.com";
-const EMAILJS_CONFIG = {
+const ADMIN_EMAIL = bookingEmailEl?.innerText?.trim() || "imsumankarmakar@gmail.com";
+const bookingSubmitBtn = bookingForm?.querySelector('button[type="submit"]');
+const EMAILJS_CONFIG = window.EMAILJS_CONFIG || {
     publicKey: "",
     serviceId: "",
     templateId: ""
@@ -176,7 +177,7 @@ function getCartSummary() {
     return lines.join("\n");
 }
 
-async function sendBookingEmail(details) {
+function buildTemplateParams(details) {
     const {
         name,
         email,
@@ -185,30 +186,82 @@ async function sendBookingEmail(details) {
         services
     } = details;
 
-    if (
+    return {
+        to_email: email,
+        recipient_email: email,
+        email,
+        admin_email: ADMIN_EMAIL,
+        customer_name: name,
+        customer_email: email,
+        customer_phone: phone,
+        services,
+        total_amount: `Rs ${total.toFixed(2)}`,
+        user_name: name,
+        user_email: email,
+        user_phone: phone,
+        service_name: services
+    };
+}
+
+async function sendBookingEmail(details) {
+    const hasEmailJsConfig =
         typeof emailjs !== "undefined" &&
         EMAILJS_CONFIG.publicKey &&
         EMAILJS_CONFIG.serviceId &&
-        EMAILJS_CONFIG.templateId
-    ) {
-        emailjs.init(EMAILJS_CONFIG.publicKey);
-        await emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, {
-            to_email: BOOKING_RECEIVER_EMAIL,
-            booking_email: BOOKING_RECEIVER_EMAIL,
-            customer_name: name,
-            customer_email: email,
-            customer_phone: phone,
-            services,
-            total_amount: `Rs ${total.toFixed(2)}`
-        });
-        return;
+        EMAILJS_CONFIG.templateId &&
+        !EMAILJS_CONFIG.publicKey.includes("YOUR_") &&
+        !EMAILJS_CONFIG.serviceId.includes("YOUR_") &&
+        !EMAILJS_CONFIG.templateId.includes("YOUR_");
+
+    if (typeof emailjs === "undefined") {
+        throw new Error("EmailJS SDK not loaded.");
     }
 
-    const subject = encodeURIComponent("Laundry Booking Confirmation");
-    const body = encodeURIComponent(
-        `New booking received\n\nCustomer Name: ${name}\nCustomer Email: ${email}\nCustomer Phone: ${phone}\n\nServices:\n${services}\n\nTotal: Rs ${total.toFixed(2)}`
-    );
-    window.location.href = `mailto:${BOOKING_RECEIVER_EMAIL}?subject=${subject}&body=${body}`;
+    if (!hasEmailJsConfig) {
+        throw new Error("EmailJS config missing. Check publicKey/serviceId/templateId in index.html.");
+    }
+
+    const templateParams = buildTemplateParams(details);
+
+    const userMailResult = await emailjs
+        .send(
+            EMAILJS_CONFIG.serviceId,
+            EMAILJS_CONFIG.templateId,
+            {
+                ...templateParams,
+                to_email: details.email,
+                recipient_email: details.email,
+                email: details.email
+            },
+            { publicKey: EMAILJS_CONFIG.publicKey }
+        )
+        .then(() => ({ ok: true, target: "user" }))
+        .catch((err) => ({ ok: false, target: "user", error: err }));
+
+    const adminMailResult = await emailjs
+        .send(
+            EMAILJS_CONFIG.serviceId,
+            EMAILJS_CONFIG.templateId,
+            {
+                ...templateParams,
+                to_email: ADMIN_EMAIL,
+                recipient_email: ADMIN_EMAIL,
+                email: ADMIN_EMAIL
+            },
+            { publicKey: EMAILJS_CONFIG.publicKey }
+        )
+        .then(() => ({ ok: true, target: "admin" }))
+        .catch((err) => ({ ok: false, target: "admin", error: err }));
+
+    if (!userMailResult.ok) {
+        const userError = userMailResult.error?.text || userMailResult.error?.message || "User email send failed.";
+        throw new Error(userError);
+    }
+
+    return {
+        userSent: true,
+        adminSent: adminMailResult.ok
+    };
 }
 
 function removeEmptyRow() {
@@ -250,24 +303,34 @@ bookingForm.addEventListener("submit", async function (e) {
     const email = document.getElementById("customer-email").value;
     const phone = document.getElementById("customer-phone").value;
     const cartSummary = getCartSummary();
+    const bookingDetails = {
+        name,
+        email,
+        phone,
+        total: totalPrice,
+        services: cartSummary
+    };
+
+    if (bookingSubmitBtn) {
+        bookingSubmitBtn.disabled = true;
+        bookingSubmitBtn.innerText = "Sending...";
+    }
 
     try {
-        await sendBookingEmail({
-            name,
-            email,
-            phone,
-            total: totalPrice,
-            services: cartSummary
-        });
+        const result = await sendBookingEmail(bookingDetails);
 
-        alert(
-            `Booking Successful!\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nTotal: Rs ${totalPrice.toFixed(2)}`
-        );
-
+        const adminNote = result.adminSent ? "" : "\n\nNote: Admin email not sent.";
+        alert(`Booking Successful!\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nTotal: Rs ${totalPrice.toFixed(2)}${adminNote}`);
         this.reset();
         clearCart();
     } catch (error) {
-        alert("Booking saved but email could not be sent. Please try again.");
+        const msg = error?.text || error?.message || "Unknown error";
+        alert(`Automatic email failed: ${msg}`);
         console.error(error);
+    } finally {
+        if (bookingSubmitBtn) {
+            bookingSubmitBtn.disabled = false;
+            bookingSubmitBtn.innerText = "Confirm Booking";
+        }
     }
 });
