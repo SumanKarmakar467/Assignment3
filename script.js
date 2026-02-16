@@ -6,6 +6,9 @@ const heroBookBtn = document.querySelector(".book-button .book-service");
 const bookingEmailEl = document.querySelector(".mail-des1");
 const ADMIN_EMAIL = bookingEmailEl?.innerText?.trim() || "imsumankarmakar@gmail.com";
 const bookingSubmitBtn = bookingForm?.querySelector('button[type="submit"]');
+const bookingSuccessMessageEl = document.getElementById("booking-success-message");
+const newsletterForm = document.getElementById("newsletter-form");
+const newsletterMessageEl = document.getElementById("newsletter-message");
 const EMAILJS_CONFIG = window.EMAILJS_CONFIG || {
     publicKey: "",
     serviceId: "",
@@ -329,6 +332,9 @@ function renderEmptyRow() {
 
 bookingForm.addEventListener("submit", async function (e) {
     e.preventDefault();
+    if (bookingSuccessMessageEl) {
+        bookingSuccessMessageEl.innerText = "";
+    }
 
     if (addedItems.size === 0) {
         alert("Please add at least one service before booking.");
@@ -359,6 +365,10 @@ bookingForm.addEventListener("submit", async function (e) {
         alert(
             `Booking Successful!\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nServices:\n${cartSummary}\n\nTotal: Rs ${totalPrice.toFixed(2)}${adminNote}`
         );
+        if (bookingSuccessMessageEl) {
+            bookingSuccessMessageEl.innerText =
+                "Thank you For Booking the Service We will get back to you soon!";
+        }
         this.reset();
         clearCart();
     } catch (error) {
@@ -368,7 +378,37 @@ bookingForm.addEventListener("submit", async function (e) {
     } finally {
         if (bookingSubmitBtn) {
             bookingSubmitBtn.disabled = false;
-            bookingSubmitBtn.innerText = "Confirm Booking";
+            bookingSubmitBtn.innerText = "Book Now";
         }
     }
 });
+
+if (newsletterForm) {
+    newsletterForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const fullNameEl = document.getElementById("full-name");
+        const emailInputEl = document.getElementById("email-input");
+        if (!fullNameEl || !emailInputEl) {
+            return;
+        }
+
+        const fullName = fullNameEl.value.trim();
+        const emailValue = emailInputEl.value.trim();
+
+        if (!fullName || !emailValue) {
+            if (newsletterMessageEl) {
+                newsletterMessageEl.style.color = "#b10012";
+                newsletterMessageEl.innerText = "Please fill full name and email.";
+            }
+            return;
+        }
+
+        if (newsletterMessageEl) {
+            newsletterMessageEl.style.color = "#0b7f2a";
+            newsletterMessageEl.innerText =
+                `Thank you ${fullName}, you have successfully subscribed!`;
+        }
+        newsletterForm.reset();
+    });
+}

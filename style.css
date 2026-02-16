@@ -402,6 +402,13 @@ span{
     background-color:white ;
     border:2px solid blue;
 }
+.newsletter-message{
+    margin-top: 10px;
+    color: #0b7f2a;
+    font-weight: 600;
+    min-height: 20px;
+    text-align: left;
+}
 .email{
     display: flex;
     flex-direction: start;
@@ -434,6 +441,33 @@ span{
 }
 .about{
     font-weight: bold;
+}
+.footer-logo a,
+.about,
+.important-des1,
+.mail-des1,
+.phone,
+.follow-des2 a{
+    color: inherit;
+    text-decoration: none;
+}
+.important-des1{
+    margin-bottom: 6px;
+}
+.important-des1:hover,
+.about:hover,
+.mail-des1:hover,
+.phone:hover{
+    color: blue;
+}
+
+.booking-success-message{
+    min-height: 20px;
+    margin-top: 4px;
+    color: #0b7f2a;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: left;
 }
 
 
