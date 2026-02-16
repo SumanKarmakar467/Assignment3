@@ -3,6 +3,13 @@ const totalPriceEl = document.getElementById("total-price");
 const bookingForm = document.getElementById("booking-form");
 const servicesSection = document.getElementById("services");
 const heroBookBtn = document.querySelector(".book-button .book-service");
+const bookingEmailEl = document.querySelector(".mail-des1");
+const BOOKING_RECEIVER_EMAIL = bookingEmailEl?.innerText?.trim() || "mail@site.com";
+const EMAILJS_CONFIG = {
+    publicKey: "",
+    serviceId: "",
+    templateId: ""
+};
 
 let totalPrice = 0;
 const addedItems = new Map();
@@ -148,6 +155,62 @@ function setButtonState(button, isAdded, quantity = 0) {
         : 'Add <ion-icon name="add-circle-outline"></ion-icon>';
 }
 
+function clearCart() {
+    addedItems.forEach((item) => {
+        item.row.remove();
+        setButtonState(item.button, false);
+    });
+
+    addedItems.clear();
+    refreshCart();
+}
+
+function getCartSummary() {
+    const lines = [];
+    addedItems.forEach((item, serviceId) => {
+        const row = cartBody.querySelector(`tr[data-service-id="${serviceId}"]`);
+        const name = row?.querySelector(".service-name")?.innerText || "Service";
+        const lineTotal = (item.unitPrice * item.quantity).toFixed(2);
+        lines.push(`${name} x ${item.quantity} = Rs ${lineTotal}`);
+    });
+    return lines.join("\n");
+}
+
+async function sendBookingEmail(details) {
+    const {
+        name,
+        email,
+        phone,
+        total,
+        services
+    } = details;
+
+    if (
+        typeof emailjs !== "undefined" &&
+        EMAILJS_CONFIG.publicKey &&
+        EMAILJS_CONFIG.serviceId &&
+        EMAILJS_CONFIG.templateId
+    ) {
+        emailjs.init(EMAILJS_CONFIG.publicKey);
+        await emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, {
+            to_email: BOOKING_RECEIVER_EMAIL,
+            booking_email: BOOKING_RECEIVER_EMAIL,
+            customer_name: name,
+            customer_email: email,
+            customer_phone: phone,
+            services,
+            total_amount: `Rs ${total.toFixed(2)}`
+        });
+        return;
+    }
+
+    const subject = encodeURIComponent("Laundry Booking Confirmation");
+    const body = encodeURIComponent(
+        `New booking received\n\nCustomer Name: ${name}\nCustomer Email: ${email}\nCustomer Phone: ${phone}\n\nServices:\n${services}\n\nTotal: Rs ${total.toFixed(2)}`
+    );
+    window.location.href = `mailto:${BOOKING_RECEIVER_EMAIL}?subject=${subject}&body=${body}`;
+}
+
 function removeEmptyRow() {
     const emptyRow = document.getElementById("empty-row");
     if (emptyRow) {
@@ -167,7 +230,7 @@ function renderEmptyRow() {
       <td colspan="3">
         <div class="empty-state">
           <ion-icon name="information-circle-outline"></ion-icon>
-          <p><strong>No Items Added</strong></p>
+          <p><strong>No items added</strong></p>
           <p>Add items to the cart from the service bar</p>
         </div>
       </td>
@@ -175,7 +238,7 @@ function renderEmptyRow() {
     cartBody.appendChild(row);
 }
 
-bookingForm.addEventListener("submit", function (e) {
+bookingForm.addEventListener("submit", async function (e) {
     e.preventDefault();
 
     if (addedItems.size === 0) {
@@ -186,10 +249,25 @@ bookingForm.addEventListener("submit", function (e) {
     const name = document.getElementById("customer-name").value;
     const email = document.getElementById("customer-email").value;
     const phone = document.getElementById("customer-phone").value;
+    const cartSummary = getCartSummary();
 
-    alert(
-        `Booking Successful!\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nTotal: ?${totalPrice.toFixed(2)}`
-    );
+    try {
+        await sendBookingEmail({
+            name,
+            email,
+            phone,
+            total: totalPrice,
+            services: cartSummary
+        });
 
-    this.reset();
+        alert(
+            `Booking Successful!\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nTotal: Rs ${totalPrice.toFixed(2)}`
+        );
+
+        this.reset();
+        clearCart();
+    } catch (error) {
+        alert("Booking saved but email could not be sent. Please try again.");
+        console.error(error);
+    }
 });
