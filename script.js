@@ -356,7 +356,9 @@ bookingForm.addEventListener("submit", async function (e) {
         const result = await sendBookingEmail(bookingDetails);
 
         const adminNote = result.adminSent ? "" : "\n\nNote: Admin email not sent.";
-        alert(`Booking Successful!\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nTotal: Rs ${totalPrice.toFixed(2)}${adminNote}`);
+        alert(
+            `Booking Successful!\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nServices:\n${cartSummary}\n\nTotal: Rs ${totalPrice.toFixed(2)}${adminNote}`
+        );
         this.reset();
         clearCart();
     } catch (error) {
