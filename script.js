@@ -177,6 +177,41 @@ function getCartSummary() {
     return lines.join("\n");
 }
 
+function getCartTableHtml(details) {
+    const rows = [];
+    addedItems.forEach((item, serviceId) => {
+        const row = cartBody.querySelector(`tr[data-service-id="${serviceId}"]`);
+        const name = row?.querySelector(".service-name")?.innerText || "Service";
+        const qty = item.quantity;
+        const unit = item.unitPrice.toFixed(2);
+        const line = (item.unitPrice * item.quantity).toFixed(2);
+        rows.push(
+            `<tr>
+                <td style="border:1px solid #ddd;padding:8px;">${name}</td>
+                <td style="border:1px solid #ddd;padding:8px;text-align:center;">${qty}</td>
+                <td style="border:1px solid #ddd;padding:8px;text-align:right;">Rs ${unit}</td>
+                <td style="border:1px solid #ddd;padding:8px;text-align:right;">Rs ${line}</td>
+            </tr>`
+        );
+    });
+
+    return `
+        <table style="border-collapse:collapse;width:100%;max-width:680px;font-family:Arial,sans-serif;font-size:14px;">
+            <thead>
+                <tr style="background:#f5f5f5;">
+                    <th style="border:1px solid #ddd;padding:8px;text-align:left;">Service</th>
+                    <th style="border:1px solid #ddd;padding:8px;text-align:center;">Qty</th>
+                    <th style="border:1px solid #ddd;padding:8px;text-align:right;">Unit Price</th>
+                    <th style="border:1px solid #ddd;padding:8px;text-align:right;">Line Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${rows.join("")}
+            </tbody>
+        </table>
+    `;
+}
+
 function buildTemplateParams(details) {
     const {
         name,
@@ -199,7 +234,8 @@ function buildTemplateParams(details) {
         user_name: name,
         user_email: email,
         user_phone: phone,
-        service_name: services
+        service_name: services,
+        services_table: getCartTableHtml(details)
     };
 }
 
