@@ -1,414 +1,193 @@
-const cartBody = document.getElementById("cart-body");
-const totalPriceEl = document.getElementById("total-price");
-const bookingForm = document.getElementById("booking-form");
-const servicesSection = document.getElementById("services");
-const heroBookBtn = document.querySelector(".book-button .book-service");
-const bookingEmailEl = document.querySelector(".mail-des1");
-const ADMIN_EMAIL = bookingEmailEl?.innerText?.trim() || "imsumankarmakar@gmail.com";
-const bookingSubmitBtn = bookingForm?.querySelector('button[type="submit"]');
-const bookingSuccessMessageEl = document.getElementById("booking-success-message");
-const newsletterForm = document.getElementById("newsletter-form");
-const newsletterMessageEl = document.getElementById("newsletter-message");
-const EMAILJS_CONFIG = window.EMAILJS_CONFIG || {
-    publicKey: "",
-    serviceId: "",
-    templateId: ""
-};
+// cart items stored here
+var cartItems = []
 
-let totalPrice = 0;
-const addedItems = new Map();
+var cartBody = document.getElementById("cart-row")
+var totalPriceEl = document.getElementById("total-price")
+var addButtons = document.querySelectorAll(".Add-items")
+var bookingForm = document.getElementById("booking-form")
+var bookingMessage = document.getElementById("booking-success-message")
+var subscribeBtn = document.querySelector(".subscribe-button")
+var subInputs = document.querySelectorAll(".subscribe-input")
+var newsletterMsg = document.getElementById("newsletter-message")
 
-if (heroBookBtn && servicesSection) {
-    heroBookBtn.addEventListener("click", () => {
-        servicesSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
+// book button scroll
+var bookBtn = document.querySelector(".book")
+var servSec = document.querySelector(".services")
+
+if (bookBtn) {
+    bookBtn.addEventListener("click", function(e) {
+        e.preventDefault()
+        servSec.scrollIntoView({ behavior: "smooth" })
+    })
 }
 
-document.querySelectorAll(".Add-items").forEach((button, index) => {
-    const itemDiv = button.parentElement;
-    const text = itemDiv.querySelector("div").innerText;
-    const priceText = itemDiv.querySelector(".price").innerText;
-    const serviceName = text.split("-")[0].trim();
-    const price = parseFloat(priceText.replace("$", "").replace("?", "").replace("₹", ""));
-    const serviceId = `service-${index + 1}`;
+// show empty message when no items
+function showEmptyRow() {
+    cartBody.innerHTML = '<tr class="reflect-row" id="reflect"><td colspan="3"><div class="empty"><ion-icon name="information-circle-outline"></ion-icon><p><strong>No items added</strong></p><p>Add items to the cart from the service bar</p></div></td></tr>'
+}
 
-    button.dataset.serviceId = serviceId;
-    button.dataset.serviceName = serviceName;
-    button.dataset.servicePrice = price.toString();
-    setButtonState(button, false);
+// calculate total
+function getTotalPrice() {
+    var total = 0
+    for (var i = 0; i < cartItems.length; i++) {
+        total = total + (cartItems[i].price * cartItems[i].qty)
+    }
+    return total
+}
 
-    button.addEventListener("click", () => toggleItem(button));
-});
-
-function toggleItem(button) {
-    const serviceId = button.dataset.serviceId;
-    const serviceName = button.dataset.serviceName;
-    const price = parseFloat(button.dataset.servicePrice);
-
-    if (addedItems.has(serviceId)) {
-        removeCompletely(serviceId);
-        return;
+// redraw the cart table
+function renderCart() {
+    if (cartItems.length == 0) {
+        showEmptyRow()
+        totalPriceEl.innerText = "0.00"
+        return
     }
 
-    addNewItem(serviceId, serviceName, price, button);
-}
+    var html = ""
+    for (var i = 0; i < cartItems.length; i++) {
+        var item = cartItems[i]
+        var lineTotal = item.price * item.qty
 
-function addNewItem(serviceId, name, unitPrice, button) {
-    removeEmptyRow();
-
-    const row = document.createElement("tr");
-    row.dataset.serviceId = serviceId;
-    row.innerHTML = `
-        <td></td>
-        <td>
-            <div class="service-line">
-                <span class="service-name">${name}</span>
-                <div class="qty-controls">
-                    <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">-</button>
-                    <span class="qty-value">1</span>
-                    <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
-                </div>
-            </div>
-        </td>
-        <td>₹<span class="line-total">${unitPrice.toFixed(2)}</span></td>
-    `;
-
-    cartBody.appendChild(row);
-
-    const item = {
-        row,
-        button,
-        unitPrice,
-        quantity: 1
-    };
-
-    addedItems.set(serviceId, item);
-    bindQuantityControls(serviceId, item);
-    setButtonState(button, true, 1);
-    refreshCart();
-}
-
-function bindQuantityControls(serviceId, item) {
-    const plusBtn = item.row.querySelector(".qty-plus");
-    const minusBtn = item.row.querySelector(".qty-minus");
-
-    plusBtn.addEventListener("click", () => changeQuantity(serviceId, 1));
-    minusBtn.addEventListener("click", () => changeQuantity(serviceId, -1));
-}
-
-function changeQuantity(serviceId, delta) {
-    const item = addedItems.get(serviceId);
-    if (!item) {
-        return;
+        html = html + "<tr>"
+        html = html + "<td>" + (i + 1) + "</td>"
+        html = html + "<td><div class='service-line'><span>" + item.name + "</span>"
+        html = html + "<button type='button' class='qty-btn qty-minus' data-index='" + i + "'>-</button>"
+        html = html + "<span>" + item.qty + "</span>"
+        html = html + "<button type='button' class='qty-btn qty-plus' data-index='" + i + "'>+</button>"
+        html = html + "</div></td>"
+        html = html + "<td>₹" + lineTotal.toFixed(2) + "</td>"
+        html = html + "</tr>"
     }
 
-    item.quantity += delta;
-
-    if (item.quantity <= 0) {
-        removeCompletely(serviceId);
-        return;
-    }
-
-    updateItemRow(item);
-    refreshCart();
+    cartBody.innerHTML = html
+    totalPriceEl.innerText = getTotalPrice().toFixed(2)
 }
 
-function updateItemRow(item) {
-    item.row.querySelector(".qty-value").innerText = item.quantity;
-    item.row.querySelector(".line-total").innerText = (item.unitPrice * item.quantity).toFixed(2);
-    setButtonState(item.button, true, item.quantity);
+// get service name and price from the clicked row
+function getServiceInfo(btn) {
+    var row = btn.parentElement
+    var txt = row.querySelector("div").innerText
+    var name = txt.split("-")[0].trim()
+    var priceText = row.querySelector(".price").innerText
+    // remove currency symbol
+    var price = parseFloat(priceText.replace("₹", "").replace(",",""))
+    return { name: name, price: price }
 }
 
-function removeCompletely(serviceId) {
-    const item = addedItems.get(serviceId);
-    if (!item) {
-        return;
-    }
-
-    item.row.remove();
-    addedItems.delete(serviceId);
-    setButtonState(item.button, false);
-    refreshCart();
-}
-
-function refreshCart() {
-    const rows = cartBody.querySelectorAll("tr[data-service-id]");
-    let updatedTotal = 0;
-
-    rows.forEach((row, index) => {
-        row.children[0].innerText = index + 1;
-
-        const item = addedItems.get(row.dataset.serviceId);
-        if (item) {
-            updatedTotal += item.unitPrice * item.quantity;
-        }
-    });
-
-    totalPrice = updatedTotal;
-    totalPriceEl.innerText = totalPrice.toFixed(2);
-
-    if (rows.length === 0) {
-        renderEmptyRow();
-    }
-}
-
-function setButtonState(button, isAdded, quantity = 0) {
-    button.classList.toggle("remove-state", isAdded);
-    button.innerHTML = isAdded
-        ? `Remove (${quantity}) <ion-icon name="remove-circle-outline"></ion-icon>`
-        : 'Add <ion-icon name="add-circle-outline"></ion-icon>';
-}
-
-function clearCart() {
-    addedItems.forEach((item) => {
-        item.row.remove();
-        setButtonState(item.button, false);
-    });
-
-    addedItems.clear();
-    refreshCart();
-}
-
-function getCartSummary() {
-    const lines = [];
-    addedItems.forEach((item, serviceId) => {
-        const row = cartBody.querySelector(`tr[data-service-id="${serviceId}"]`);
-        const name = row?.querySelector(".service-name")?.innerText || "Service";
-        const lineTotal = (item.unitPrice * item.quantity).toFixed(2);
-        lines.push(`${name} x ${item.quantity} = Rs ${lineTotal}`);
-    });
-    return lines.join("\n");
-}
-
-function getCartTableHtml(details) {
-    const rows = [];
-    addedItems.forEach((item, serviceId) => {
-        const row = cartBody.querySelector(`tr[data-service-id="${serviceId}"]`);
-        const name = row?.querySelector(".service-name")?.innerText || "Service";
-        const qty = item.quantity;
-        const unit = item.unitPrice.toFixed(2);
-        const line = (item.unitPrice * item.quantity).toFixed(2);
-        rows.push(
-            `<tr>
-                <td style="border:1px solid #ddd;padding:8px;">${name}</td>
-                <td style="border:1px solid #ddd;padding:8px;text-align:center;">${qty}</td>
-                <td style="border:1px solid #ddd;padding:8px;text-align:right;">Rs ${unit}</td>
-                <td style="border:1px solid #ddd;padding:8px;text-align:right;">Rs ${line}</td>
-            </tr>`
-        );
-    });
-
-    return `
-        <table style="border-collapse:collapse;width:100%;max-width:680px;font-family:Arial,sans-serif;font-size:14px;">
-            <thead>
-                <tr style="background:#f5f5f5;">
-                    <th style="border:1px solid #ddd;padding:8px;text-align:left;">Service</th>
-                    <th style="border:1px solid #ddd;padding:8px;text-align:center;">Qty</th>
-                    <th style="border:1px solid #ddd;padding:8px;text-align:right;">Unit Price</th>
-                    <th style="border:1px solid #ddd;padding:8px;text-align:right;">Line Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${rows.join("")}
-            </tbody>
-        </table>
-    `;
-}
-
-function buildTemplateParams(details) {
-    const {
-        name,
-        email,
-        phone,
-        total,
-        services
-    } = details;
-
-    return {
-        to_email: email,
-        recipient_email: email,
-        email,
-        admin_email: ADMIN_EMAIL,
-        customer_name: name,
-        customer_email: email,
-        customer_phone: phone,
-        services,
-        total_amount: `Rs ${total.toFixed(2)}`,
-        user_name: name,
-        user_email: email,
-        user_phone: phone,
-        service_name: services,
-        services_table: getCartTableHtml(details)
-    };
-}
-
-async function sendBookingEmail(details) {
-    const hasEmailJsConfig =
-        typeof emailjs !== "undefined" &&
-        EMAILJS_CONFIG.publicKey &&
-        EMAILJS_CONFIG.serviceId &&
-        EMAILJS_CONFIG.templateId &&
-        !EMAILJS_CONFIG.publicKey.includes("YOUR_") &&
-        !EMAILJS_CONFIG.serviceId.includes("YOUR_") &&
-        !EMAILJS_CONFIG.templateId.includes("YOUR_");
-
-    if (typeof emailjs === "undefined") {
-        throw new Error("EmailJS SDK not loaded.");
-    }
-
-    if (!hasEmailJsConfig) {
-        throw new Error("EmailJS config missing. Check publicKey/serviceId/templateId in index.html.");
-    }
-
-    const templateParams = buildTemplateParams(details);
-
-    const userMailResult = await emailjs
-        .send(
-            EMAILJS_CONFIG.serviceId,
-            EMAILJS_CONFIG.templateId,
-            {
-                ...templateParams,
-                to_email: details.email,
-                recipient_email: details.email,
-                email: details.email
-            },
-            { publicKey: EMAILJS_CONFIG.publicKey }
-        )
-        .then(() => ({ ok: true, target: "user" }))
-        .catch((err) => ({ ok: false, target: "user", error: err }));
-
-    const adminMailResult = await emailjs
-        .send(
-            EMAILJS_CONFIG.serviceId,
-            EMAILJS_CONFIG.templateId,
-            {
-                ...templateParams,
-                to_email: ADMIN_EMAIL,
-                recipient_email: ADMIN_EMAIL,
-                email: ADMIN_EMAIL
-            },
-            { publicKey: EMAILJS_CONFIG.publicKey }
-        )
-        .then(() => ({ ok: true, target: "admin" }))
-        .catch((err) => ({ ok: false, target: "admin", error: err }));
-
-    if (!userMailResult.ok) {
-        const userError = userMailResult.error?.text || userMailResult.error?.message || "User email send failed.";
-        throw new Error(userError);
-    }
-
-    return {
-        userSent: true,
-        adminSent: adminMailResult.ok
-    };
-}
-
-function removeEmptyRow() {
-    const emptyRow = document.getElementById("empty-row");
-    if (emptyRow) {
-        emptyRow.remove();
-    }
-}
-
-function renderEmptyRow() {
-    if (document.getElementById("empty-row")) {
-        return;
-    }
-
-    const row = document.createElement("tr");
-    row.className = "empty-row";
-    row.id = "empty-row";
-    row.innerHTML = `
-      <td colspan="3">
-        <div class="empty-state">
-          <ion-icon name="information-circle-outline"></ion-icon>
-          <p><strong>No items added</strong></p>
-          <p>Add items to the cart from the service bar</p>
-        </div>
-      </td>
-    `;
-    cartBody.appendChild(row);
-}
-
-bookingForm.addEventListener("submit", async function (e) {
-    e.preventDefault();
-    if (bookingSuccessMessageEl) {
-        bookingSuccessMessageEl.innerText = "";
-    }
-
-    if (addedItems.size === 0) {
-        alert("Please add at least one service before booking.");
-        return;
-    }
-
-    const name = document.getElementById("customer-name").value;
-    const email = document.getElementById("customer-email").value;
-    const phone = document.getElementById("customer-phone").value;
-    const cartSummary = getCartSummary();
-    const bookingDetails = {
-        name,
-        email,
-        phone,
-        total: totalPrice,
-        services: cartSummary
-    };
-
-    if (bookingSubmitBtn) {
-        bookingSubmitBtn.disabled = true;
-        bookingSubmitBtn.innerText = "Sending...";
-    }
-
-    try {
-        const result = await sendBookingEmail(bookingDetails);
-
-        const adminNote = result.adminSent ? "" : "\n\nNote: Admin email not sent.";
-        alert(
-            `Booking Successful!\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nServices:\n${cartSummary}\n\nTotal: Rs ${totalPrice.toFixed(2)}${adminNote}`
-        );
-        if (bookingSuccessMessageEl) {
-            bookingSuccessMessageEl.innerText =
-                "Thank you For Booking the Service We will get back to you soon!";
-        }
-        this.reset();
-        clearCart();
-    } catch (error) {
-        const msg = error?.text || error?.message || "Unknown error";
-        alert(`Automatic email failed: ${msg}`);
-        console.error(error);
-    } finally {
-        if (bookingSubmitBtn) {
-            bookingSubmitBtn.disabled = false;
-            bookingSubmitBtn.innerText = "Book Now";
+// add to cart or increase qty if already there
+function addToCart(name, price) {
+    var found = false
+    for (var i = 0; i < cartItems.length; i++) {
+        if (cartItems[i].name == name) {
+            cartItems[i].qty = cartItems[i].qty + 1
+            found = true
+            break
         }
     }
-});
-
-if (newsletterForm) {
-    newsletterForm.addEventListener("submit", function (e) {
-        e.preventDefault();
-
-        const fullNameEl = document.getElementById("full-name");
-        const emailInputEl = document.getElementById("email-input");
-        if (!fullNameEl || !emailInputEl) {
-            return;
-        }
-
-        const fullName = fullNameEl.value.trim();
-        const emailValue = emailInputEl.value.trim();
-
-        if (!fullName || !emailValue) {
-            if (newsletterMessageEl) {
-                newsletterMessageEl.style.color = "#b10012";
-                newsletterMessageEl.innerText = "Please fill full name and email.";
-            }
-            return;
-        }
-
-        if (newsletterMessageEl) {
-            newsletterMessageEl.style.color = "#0b7f2a";
-            newsletterMessageEl.innerText =
-                `Thank you ${fullName}, you have successfully subscribed!`;
-        }
-        newsletterForm.reset();
-    });
+    if (found == false) {
+        cartItems.push({ name: name, price: price, qty: 1 })
+    }
+    renderCart()
 }
+
+function increaseQty(index) {
+    cartItems[index].qty = cartItems[index].qty + 1
+    renderCart()
+}
+
+function decreaseQty(index) {
+    cartItems[index].qty = cartItems[index].qty - 1
+    if (cartItems[index].qty <= 0) {
+        cartItems.splice(index, 1)
+    }
+    renderCart()
+}
+
+// add button click
+for (var i = 0; i < addButtons.length; i++) {
+    addButtons[i].addEventListener("click", function() {
+        var info = getServiceInfo(this)
+        addToCart(info.name, info.price)
+    })
+}
+
+// plus minus buttons inside cart
+cartBody.addEventListener("click", function(e) {
+    var btn = e.target
+    if (btn.classList.contains("qty-plus")) {
+        var idx = parseInt(btn.dataset.index)
+        increaseQty(idx)
+    }
+    if (btn.classList.contains("qty-minus")) {
+        var idx = parseInt(btn.dataset.index)
+        decreaseQty(idx)
+    }
+})
+
+// booking form submit
+if (bookingForm) {
+    bookingForm.addEventListener("submit", function(e) {
+        e.preventDefault()
+
+        if (cartItems.length == 0) {
+            alert("Please add at least one service to the cart first!")
+            return
+        }
+
+        var nameVal = bookingForm.querySelector('input[type="text"]').value.trim()
+        var emailVal = bookingForm.querySelector('input[type="email"]').value.trim()
+        var phoneVal = bookingForm.querySelector('input[type="tel"]').value.trim()
+
+        if (nameVal == "" || emailVal == "" || phoneVal == "") {
+            alert("Please fill all the details.")
+            return
+        }
+
+        // make summary text
+        var summary = ""
+        for (var i = 0; i < cartItems.length; i++) {
+            var item = cartItems[i]
+            summary = summary + item.name + " x" + item.qty + " = Rs " + (item.price * item.qty).toFixed(2) + "\n"
+        }
+
+        var total = getTotalPrice()
+        alert("Booking Successful!\n\nName: " + nameVal + "\nEmail: " + emailVal + "\nPhone: " + phoneVal + "\n\nServices:\n" + summary + "\nTotal: Rs " + total.toFixed(2))
+
+        if (bookingMessage) {
+            bookingMessage.innerText = "Thank you! Your booking is submitted."
+        }
+
+        bookingForm.reset()
+        cartItems = []
+        renderCart()
+    })
+}
+
+// newsletter subscribe
+if (!newsletterMsg) {
+    newsletterMsg = document.createElement("p")
+    newsletterMsg.id = "newsletter-message"
+    newsletterMsg.style.marginTop = "10px"
+    subscribeBtn.parentElement.appendChild(newsletterMsg)
+}
+
+if (subscribeBtn) {
+    subscribeBtn.addEventListener("click", function(e) {
+        e.preventDefault()
+        var name = subInputs[0].value.trim()
+        var email = subInputs[1].value.trim()
+
+        if (name == "" || email == "") {
+            newsletterMsg.style.color = "red"
+            newsletterMsg.innerText = "Please fill full name and email."
+            return
+        }
+
+        newsletterMsg.style.color = "green"
+        newsletterMsg.innerText = "Thank you " + name + ", you have subscribed!"
+        subInputs[0].value = ""
+        subInputs[1].value = ""
+    })
+}
+
+renderCart()
