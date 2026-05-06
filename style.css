@@ -212,7 +212,7 @@ span{
     border-bottom: none;
 }
 
-/* Individual item */
+
 #items {
     display: flex;
     justify-content: space-between;
