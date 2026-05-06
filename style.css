@@ -100,11 +100,8 @@ span{
     font-size:2.8rem;
     margin-bottom: 16px;
 }
-/* .heading2{
-    color:rgba(0, 0, 0, 0.596);
-    font-size:2.8rem;
-    margin-bottom: 16px;
-} */
+
+
 .heading3{
     color:blue;
     font-size:2.8rem;
@@ -167,9 +164,7 @@ span{
     font-weight: bold;
     font-size: 1.5rem;
 }
-/* ================================
-   OUR SERVICES – LEFT BOX
-================================ */
+
 
 .our-services {
     max-width: 1180px;
