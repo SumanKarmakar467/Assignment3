@@ -162,20 +162,23 @@
               type="text"
               id="customer-name"
               placeholder="Full Name"
-              required
             />
+            <span id="customer-name-error" class="field-error"></span>
+
             <input
               type="email"
               id="customer-email"
               placeholder="Email"
-              required
             />
+            <span id="customer-email-error" class="field-error"></span>
+
             <input
               type="tel"
               id="customer-phone"
-              placeholder="Phone Number"
-              required
+              placeholder="Phone Number (10 digits)"
             />
+            <span id="customer-phone-error" class="field-error"></span>
+
             <button type="submit" class="book-service">Confirm Booking</button>
             <p id="book-conform"></p>
           </form>
@@ -284,6 +287,25 @@
     </footer>
 
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+
+    <!--
+      EmailJS SDK – sends emails directly from the browser without a backend server.
+      Steps to set up:
+        1. Create a free account at https://www.emailjs.com
+        2. Add an Email Service (e.g. Gmail) → note the Service ID
+        3. Create an Email Template with variables:
+             {{customer_name}}, {{customer_email}}, {{customer_phone}},
+             {{selected_services}}, {{total_amount}}
+           → note the Template ID
+        4. Go to Account → Public Key → copy it
+        5. Replace the three placeholder strings in script.js and the key below
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+      // Replace "YOUR_PUBLIC_KEY" with your actual EmailJS public key
+      emailjs.init("YOUR_PUBLIC_KEY");
+    </script>
+
     <script src="script.js"></script>
   </body>
 </html>
