@@ -257,6 +257,20 @@ span{
     color: #ffffff;
 }
 
+.remove-btn {
+  background-color: red;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: none;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
 
 
 .add-items {
