@@ -48,7 +48,7 @@ for (let i = 0; i < buttons.length; i++) {
         }       
         else {
             row.remove();
-            
+
             count--;
 
             total -= Number(price);
@@ -61,3 +61,60 @@ for (let i = 0; i < buttons.length; i++) {
         }
   });
 }
+
+let booking=document.querySelector("#booking-form");
+
+booking.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    let name = document.querySelector("#customer-name").value;
+    let email = document.querySelector("#customer-email").value;
+    let phone = document.querySelector("#customer-phone").value;
+    let total = document.querySelector("#total-price").textContent;
+    let confirmMsg = document.querySelector("#book-conform");
+
+    confirmMsg.innerText = "Thank you For Booking the Service We will get back to you soon!";
+
+    console.log(name);
+    console.log(email);
+    console.log(phone);
+
+    let rows = document.querySelectorAll("#cart-body tr");
+
+    let serviceList = "";
+
+    for(let i =0 ; i<rows.length ; i++){
+        let columns = rows[i].querySelectorAll("td");
+
+        if(columns.length === 3){
+            serviceList +=
+            (1+1)+(".")+
+                columns[1].textContent +
+                " - ₹" +
+                columns[2].textContent +
+                "\n";        
+        }
+    }
+    console.log("Selected Services:- ");
+
+    console.log(serviceList);
+
+    console.log("The Total price is :- ",total);
+
+    alert(`
+        BOOKING CONFIRMED
+
+        Name: ${name}
+        Email: ${email}
+        Phone: ${phone}
+
+        Services:
+            ${serviceList}
+
+        Total Amount: ₹${total}
+
+        Thank You For Choosing Our Laundry Service!
+    `);
+})
+
+
