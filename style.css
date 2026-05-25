@@ -278,3 +278,58 @@ a{
     color:black;
     margin-bottom:50px;
 }
+
+/* Subscribe section  */
+.subscribe{
+    margin-top:150px;
+    background-color: var(--primary-color);
+}
+.subscribe-section{
+    padding:20px;
+    max-width:1280px;
+    margin:0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+.subscribe-heading{
+    font-size: 2rem;
+}
+.full-name{
+    margin:20px;
+}
+.email{
+    margin:20px;
+}
+#full-name{
+    padding:15px;
+    transition: all ease 0.2s;
+}
+#full-name:hover{
+    border:2px solid white;
+    background-color:#4eaba3;
+}
+#email-input{
+    padding:15px;
+    transition: all ease 0.2s;
+}
+#email-input:hover{
+    border:2px solid white;
+    background-color:#4eaba3;
+}
+.subscribe-button{
+    margin:20px;
+}
+.sub{
+    padding:15px;
+    width:180px;
+    border-radius: 30px;
+    color:var(--primary-color);
+    font-size: 1.2rem;
+    font-weight: bold;
+    border:none;
+    transition: all ease 0.2s;
+}
+.sub:hover{
+    background-color: orangered;
+    color:white;
+}
