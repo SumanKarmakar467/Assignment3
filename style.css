@@ -333,3 +333,23 @@ a{
     background-color: orangered;
     color:white;
 }
+
+/* Footer  */
+.container{
+    margin-top:20px;
+    text-align: left;
+}
+.footer-section{
+    max-width:1280px;
+    margin:0 auto;
+    display: flex;
+    justify-content: space-between;
+    padding:30px;
+}
+.footer-div1{
+    line-height: 1.5rem;
+}
+.footer-logo,.important,.follow-des1,.mail-des1,.phone{
+    color:var(--primary-color);
+    margin-bottom: 10px;
+}
