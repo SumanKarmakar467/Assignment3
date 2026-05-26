@@ -69,7 +69,9 @@ for(let i=0;i<buttons.length;i++){
         total =total + price;
         totalPrice.innerText = total;
 
-        buttons[i].innerText = "Remove items"
+        buttons[i].innerText = "Remove items";
+
+        buttons[i].style.backgroundColor = "red";
 
         serialNo++;
 
