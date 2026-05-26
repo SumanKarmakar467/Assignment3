@@ -79,9 +79,12 @@ for(let i=0;i<buttons.length;i++){
 // for sending email to user email ID
 const bookingForm = document.getElementById("booking-form");
 
+const bookConform = document.getElementById("book-conform");
+
 bookingForm.addEventListener("submit", function (e) {
 
     e.preventDefault();
+    bookConform.innerText = "";
 
     let customerName = document.getElementById("customer-name").value;
     let customerEmail = document.getElementById("customer-email").value;
@@ -94,6 +97,9 @@ bookingForm.addEventListener("submit", function (e) {
 
     if (total === 0) {
         alert("Please add at least one service.");
+
+        bookConform.style.color = "red";
+        bookConform.innerText ="Add the items to the cart to book";
         return;
     }
 
@@ -126,7 +132,8 @@ bookingForm.addEventListener("submit", function (e) {
     )
 
     .then(function () {
-        alert("Booking Confirmed! Email Sent Successfully.");
+        bookConform.style.color = "green";
+        bookConform.innerText ="Email has been sent successfully";
         bookingForm.reset();
     })
 
@@ -137,3 +144,4 @@ bookingForm.addEventListener("submit", function (e) {
     });
 
 });
+
